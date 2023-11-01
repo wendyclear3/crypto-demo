@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  postgresql:
+    image: postgres
+    container_name: backend
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_HOST=localhost
+      - POSTGRES_USER=backend
+      - POSTGRES_PASSWORD=backend
+      - POSTGRES_DATABASE=backend
+    command: postgres
+    restart: always
+
+  redis:
+    image: redis:alpine3.14
+    container_name: redis-backend
+    ports:
+      - '6379:6379'
