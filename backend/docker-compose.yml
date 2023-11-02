@@ -8,9 +8,9 @@ services:
       - '5433:5432'
     environment:
       - POSTGRES_HOST=localhost
-      - POSTGRES_USER=backend
-      - POSTGRES_PASSWORD=backend
-      - POSTGRES_DATABASE=backend
+      - POSTGRES_USER=wendy
+      - POSTGRES_PASSWORD=wendy
+      - POSTGRES_DATABASE=wendy
     command: postgres
     restart: always
 
