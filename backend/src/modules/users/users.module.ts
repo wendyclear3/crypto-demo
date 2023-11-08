@@ -8,5 +8,6 @@ import { User } from './models/user.model';
   imports: [SequelizeModule.forFeature([User])], //добавлять модели я буду с помощью sequelize модуля, с помощью него я буду работать с запросами к базе данных.
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}
