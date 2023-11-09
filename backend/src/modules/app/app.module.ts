@@ -7,6 +7,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import configurations from '../../configurations';
 import { User } from '../users/models/user.model';
 import { AuthModule } from '../auth/auth.module';
+import { TokenModule } from '../token/token.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from '../auth/auth.module';
     }),
     UserModule,
     AuthModule,
+    TokenModule,
   ], //импорт модулей сюда //forRoot - глобально
   controllers: [AppController], //сюда нужно добавлять контроллеры которые относятся к данному модулю
   providers: [AppService], //передаем сущности, которые обрабатывают бизнес-логику в нашем проекте (сервисы, репозитории)
