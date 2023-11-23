@@ -1,7 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
-export class WatchListDTO {
+export class CreateAssetResponse {
+  @ApiProperty()
+  @IsNumber()
+  user: number;
+
   @ApiProperty()
   @IsString()
   name: string;
