@@ -5,7 +5,11 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule); //базовый класс NestFactory и его метод create, куда мы передаем наш рутовый модуль (AppModule)
+  const app = await NestFactory.create(AppModule, {
+    cors: {
+      origin: ['http://localhost:3000'],
+    },
+  }); //базовый класс NestFactory и его метод create, куда мы передаем наш рутовый модуль (AppModule)
   const configService = app.get(ConfigService); //получаем ссылку на файл
   const port = configService.get('port'); //получаем значение для порта из файла
   app.useGlobalPipes(new ValidationPipe()); //создаем с помощью импортированного класса пайп, с помощью которого мы будем проверять данные

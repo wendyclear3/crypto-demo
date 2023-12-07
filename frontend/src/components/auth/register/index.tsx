@@ -1,7 +1,17 @@
 import React from 'react'
 import { TextField, Button, Typography } from '@mui/material'
+import { IPropsRegister } from '../../../common/types/auth'
 
-const RegisterPage = () => {
+const RegisterPage: React.FC<IPropsRegister> = (
+  props: IPropsRegister
+): JSX.Element => {
+  const {
+    setEmail,
+    setPassword,
+    setRepeatPassword,
+    setFirstName,
+    setUserName,
+  } = props
   return (
     <>
       <Typography variant="h2" fontFamily="Poppins" textAlign="center">
@@ -21,6 +31,7 @@ const RegisterPage = () => {
         label="Name"
         variant="outlined"
         placeholder="Enter your name"
+        onChange={(e) => setFirstName(e.target.value)}
       />
       <TextField
         fullWidth={true}
@@ -28,6 +39,7 @@ const RegisterPage = () => {
         label="Username"
         variant="outlined"
         placeholder="Enter your username"
+        onChange={(e) => setUserName(e.target.value)}
       />
       <TextField
         fullWidth={true}
@@ -35,6 +47,7 @@ const RegisterPage = () => {
         label="Email"
         variant="outlined"
         placeholder="Enter your email"
+        onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
         fullWidth={true}
@@ -43,6 +56,7 @@ const RegisterPage = () => {
         variant="outlined"
         type="password"
         placeholder="Enter your password"
+        onChange={(e) => setPassword(e.target.value)}
       />
       <TextField
         fullWidth={true}
@@ -51,8 +65,10 @@ const RegisterPage = () => {
         variant="outlined"
         type="password"
         placeholder="Repeat your password"
+        onChange={(e) => setRepeatPassword(e.target.value)}
       />
       <Button
+        type="submit"
         sx={{
           fontFamily: 'Poppins',
           marginTop: 2,
