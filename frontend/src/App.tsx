@@ -3,9 +3,15 @@ import Home from './components/home'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from './components/utils/router/privateRoute'
 import AuthRootComponent from './components/auth'
+import { ColorModeContext, useMode } from './theme'
+import { ThemeProvider, CssBaseline } from '@mui/material'
 
 function App() {
+  const [theme, colorMode] = useMode()
   return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline/>
     <div className="app">
       <Routes>
         <Route element={<PrivateRoute />}>
@@ -15,6 +21,8 @@ function App() {
         <Route path="register" element={<AuthRootComponent />} />
       </Routes>
     </div>
+    </ThemeProvider>
+    </ColorModeContext.Provider>
   )
 }
 
