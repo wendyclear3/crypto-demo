@@ -25,7 +25,7 @@ const TopBarComponent = () => {
       <Box display="flex">
         <Grid
           onClick={colorMode.toggleColorMode}
-          sx={{ pr: "37px", borderRight: `1px solid ${colors.gray.DEFAULT}` }}
+          sx={{ pr: "37px", borderRight: `1px solid ${colors.borderColor}` }}
         >
           <IconButton sx={{ mr: "45px" }}>
             {theme.palette.mode === "dark" ? (
