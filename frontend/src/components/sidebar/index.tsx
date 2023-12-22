@@ -14,16 +14,13 @@ import {
   useTheme,
 } from "@mui/material";
 import {
-  HomeOutlined,
   ChevronLeftOutlined,
   ChevronRightOutlined,
-  AutoGraphOutlined,
-  MenuBookOutlined,
-  SettingsOutlined,
   LogoutOutlined,
 } from "@mui/icons-material";
 import { useLocation, useNavigate } from "react-router-dom";
 import FlexBetween from "../flex-between";
+import { navMenu } from "../../common/mocks/navigate";
 
 const SidebarComponent = (props: any) => {
   const [active, setActive] = useState("");
@@ -36,6 +33,19 @@ const SidebarComponent = (props: any) => {
   useEffect(() => {
     setActive(pathname.substring(1));
   }, [pathname]);
+
+  const renderNavMenu = navMenu.map((element): JSX.Element => {
+    return (
+      <ListItem key={element.id}>
+        <ListItemButton onClick={() => navigate(`${element.path}`)}>
+          <ListItemIcon>{element.icon}</ListItemIcon>
+          <ListItemText>
+            <Typography variant={"body1"}>{element.name}</Typography>
+          </ListItemText>
+        </ListItemButton>
+      </ListItem>
+    );
+  });
 
   return (
     <Box component="nav">
@@ -68,6 +78,7 @@ const SidebarComponent = (props: any) => {
                 )}
               </FlexBetween>
             </Box>
+            <List>{renderNavMenu}</List>
           </Box>
         </Drawer>
       )}
