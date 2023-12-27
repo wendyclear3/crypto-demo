@@ -72,24 +72,12 @@ const SidebarComponent = (props: any) => {
             },
           }}
         >
-          <Box
-            sx={{
-              borderBottom: `1px solid ${colors.borderColor}`,
-            }}
-            width="100%"
-          >
+          <Box className={classes.navBlock}>
             <Box>
               <FlexBetween>
                 <Box className={classes.brand}>
                   <img src={Logo} alt="logo" />
-                  <Typography
-                    variant="h1"
-                    color={
-                      theme.palette.mode === "dark"
-                        ? colors.white.DEFAULT
-                        : colors.black.DEFAULT
-                    }
-                  >
+                  <Typography variant="h1" className={classes.brandTitle}>
                     Demo
                   </Typography>
                 </Box>
@@ -100,7 +88,7 @@ const SidebarComponent = (props: any) => {
                 )}
               </FlexBetween>
             </Box>
-            <List sx={{ marginBottom: "55px" }}>{renderNavMenu}</List>
+            <List className={classes.navList}>{renderNavMenu}</List>
           </Box>
           <Box width="100%">
             <List>
