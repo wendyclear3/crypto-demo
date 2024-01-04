@@ -1,9 +1,9 @@
-import React from "react";
-import { TextField, Button, Typography } from "@mui/material";
-import { IPropsLogin } from "../../../common/types/auth";
+import React from 'react'
+import { TextField, Button, Typography } from '@mui/material'
+import { IPropsLogin } from '../../../common/types/auth'
 
 const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
-  const { navigate, register, errors } = props;
+  const { navigate, register, errors } = props
   return (
     <>
       <Typography variant="h2" fontFamily="Poppins" textAlign="center">
@@ -24,11 +24,8 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
         label="Email"
         variant="outlined"
         placeholder="Enter your email"
-        {...register("email", {
-          required: "Email is required",
-          pattern: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-        })}
-        helperText={errors.email ? `${errors.email.message}` : ""}
+        helperText={errors.email ? `${errors.email.message}` : ''}
+        {...register('email')}
       />
       <TextField
         error={!!errors.password}
@@ -38,31 +35,29 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
         variant="outlined"
         type="password"
         placeholder="Enter your password"
-        {...register("password", {
-          required: "Password is required",
-        })}
-        helperText={errors.password ? `${errors.password.message}` : ""}
+        helperText={errors.password ? `${errors.password.message}` : ''}
+        {...register('password')}
       />
       <Button
         type="submit"
         sx={{
-          fontFamily: "Poppins",
+          fontFamily: 'Poppins',
           marginTop: 2,
           marginBottom: 2,
-          width: "60%",
+          width: '60%',
         }}
         variant="contained"
       >
         Login
       </Button>
-      <Typography variant="body1" sx={{ fontFamily: "Poppins" }}>
+      <Typography variant="body1" sx={{ fontFamily: 'Poppins' }}>
         Don't have an account?
-        <span className="incitingText" onClick={() => navigate("/register")}>
+        <span className="incitingText" onClick={() => navigate('/register')}>
           Registration
         </span>
       </Typography>
     </>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage
