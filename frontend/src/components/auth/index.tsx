@@ -1,42 +1,47 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import LoginPage from "./login";
-import RegisterPage from "./register";
-import "./style.scss";
-import { Box } from "@mui/material";
-import { instance } from "../utils/axios";
-import { useAppDispatch } from "../utils/hook";
-import { login } from "../../store/slice/auth";
-import { AppErrors } from "../../common/errors";
-import { useForm } from "react-hook-form";
+import React from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import LoginPage from './login'
+import RegisterPage from './register'
+import './style.scss'
+import { Box } from '@mui/material'
+import { instance } from '../utils/axios'
+import { useAppDispatch } from '../utils/hook'
+import { login } from '../../store/slice/auth'
+import { AppErrors } from '../../common/errors'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { LoginSchema } from '../utils/yup'
 
 const AuthRootComponent: React.FC = (): JSX.Element => {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [repeatPassword, setRepeatPassword] = React.useState("");
-  const [firstName, setFirstName] = React.useState("");
-  const [userName, setUserName] = React.useState("");
-  const location = useLocation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [repeatPassword, setRepeatPassword] = React.useState('')
+  const [firstName, setFirstName] = React.useState('')
+  const [userName, setUserName] = React.useState('')
+  const location = useLocation()
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm({
+    mode: 'onSubmit',
+    resolver: yupResolver(LoginSchema),
+  })
 
   const handleSubmitForm = async (data: any) => {
-    if (location.pathname === "/login") {
+    if (location.pathname === '/login') {
       try {
         const userData = {
           email: data.email,
           password: data.password,
-        };
-        const user = await instance.post("auth/login", userData);
-        await dispatch(login(user.data));
-        navigate("/");
+        }
+        const user = await instance.post('auth/login', userData)
+        await dispatch(login(user.data))
+        navigate('/')
       } catch (error) {
-        return error;
+        return error
       }
     } else {
       if (password === repeatPassword) {
@@ -46,19 +51,19 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
             password,
             userName,
             firstName,
-          };
-          const newUser = await instance.post("auth/register", userData);
-          await dispatch(login(newUser.data));
-          navigate("/");
+          }
+          const newUser = await instance.post('auth/register', userData)
+          await dispatch(login(newUser.data))
+          navigate('/')
         } catch (error) {
-          console.log(error);
-          return error;
+          console.log(error)
+          return error
         }
       } else {
-        throw new Error(AppErrors.PasswordsDoNotMatch);
+        throw new Error(AppErrors.PasswordsDoNotMatch)
       }
     }
-  };
+  }
 
   return (
     <div className="root">
@@ -72,15 +77,15 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
           margin="auto"
           padding={5}
           borderRadius={5}
-          boxShadow={"5px 5px 10px #ccc"}
+          boxShadow={'5px 5px 10px #ccc'}
         >
-          {location.pathname === "/login" ? (
+          {location.pathname === '/login' ? (
             <LoginPage
               errors={errors}
               navigate={navigate}
               register={register}
             />
-          ) : location.pathname === "/register" ? (
+          ) : location.pathname === '/register' ? (
             <RegisterPage
               navigate={navigate}
               setEmail={setEmail}
@@ -93,7 +98,7 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
         </Box>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default AuthRootComponent;
+export default AuthRootComponent
