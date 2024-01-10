@@ -11,6 +11,7 @@ import { AppErrors } from '../../common/errors'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { LoginSchema } from '../utils/yup'
+import * as yup from 'yup'
 
 const AuthRootComponent: React.FC = (): JSX.Element => {
   const [email, setEmail] = React.useState('')
@@ -25,9 +26,12 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm({
-    mode: 'onSubmit',
+  } = useForm<yup.InferType<typeof LoginSchema>>({
     resolver: yupResolver(LoginSchema),
+    defaultValues: {
+      email: email,
+      password: password,
+    },
   })
 
   const handleSubmitForm = async (data: any) => {
