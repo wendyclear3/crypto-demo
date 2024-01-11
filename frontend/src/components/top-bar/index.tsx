@@ -1,5 +1,5 @@
-import { useAppSelector } from "../utils/hook";
-import { useStyles } from "./styles";
+import { useAppSelector } from '../utils/hook'
+import { useStyles } from './styles'
 import {
   AppBar,
   Box,
@@ -10,23 +10,26 @@ import {
   Toolbar,
   Typography,
   useTheme,
-} from "@mui/material";
+} from '@mui/material'
 import {
   LightMode,
   DarkMode,
   Search,
   NotificationsNone,
   MenuOutlined,
-} from "@mui/icons-material";
-import { ColorModeContext, tokens } from "../../theme";
-import { useContext } from "react";
-import FlexBetween from "../flex-between";
+} from '@mui/icons-material'
+import { ColorModeContext, tokens } from '../../theme'
+import React, { useContext } from 'react'
+import FlexBetween from '../flex-between'
+import { ITopBarProps } from '../../common/types/top-bar'
 
-const TopBarComponent = (props: any) => {
-  const theme = useTheme();
-  const colorMode: any = useContext(ColorModeContext);
-  const classes = useStyles();
-  const { isOpen, setIsOpen } = props;
+const TopBarComponent: React.FC<ITopBarProps> = (
+  props: ITopBarProps
+): JSX.Element => {
+  const theme = useTheme()
+  const colorMode: any = useContext(ColorModeContext)
+  const classes = useStyles()
+  const { isOpen, setIsOpen } = props
 
   return (
     <AppBar className={classes.root} position="static">
@@ -44,7 +47,7 @@ const TopBarComponent = (props: any) => {
               onClick={colorMode.toggleColorMode}
               className={classes.themeIcon}
             >
-              {theme.palette.mode === "dark" ? <DarkMode /> : <LightMode />}
+              {theme.palette.mode === 'dark' ? <DarkMode /> : <LightMode />}
             </IconButton>
             <IconButton>
               <NotificationsNone />
@@ -59,7 +62,7 @@ const TopBarComponent = (props: any) => {
         </Box>
       </Toolbar>
     </AppBar>
-  );
-};
+  )
+}
 
-export default TopBarComponent;
+export default TopBarComponent

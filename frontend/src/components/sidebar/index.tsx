@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useStyles } from "./styles";
+import React, { useContext, useEffect, useState } from 'react'
+import { useStyles } from './styles'
 import {
   Box,
   Drawer,
-  Divider,
   IconButton,
   List,
   ListItem,
@@ -12,47 +11,47 @@ import {
   ListItemText,
   Typography,
   useTheme,
-} from "@mui/material";
-import {
-  ChevronLeftOutlined,
-  ChevronRightOutlined,
-  LogoutOutlined,
-} from "@mui/icons-material";
-import { useLocation, useNavigate } from "react-router-dom";
-import FlexBetween from "../flex-between";
-import { navMenu } from "../../common/mocks/navigate";
-import { ColorModeContext, tokens } from "../../theme";
-import Logo from "../../assets/images/sidebar/logo.svg";
+} from '@mui/material'
+import { ChevronLeftOutlined, LogoutOutlined } from '@mui/icons-material'
+import { useLocation, useNavigate } from 'react-router-dom'
+import FlexBetween from '../flex-between'
+import { navMenu } from '../../common/mocks/navigate'
+import Logo from '../../assets/images/sidebar/logo.svg'
+import { ISidebarProps } from '../../common/types/sidebar'
 
-const SidebarComponent = (props: any) => {
-  const [active, setActive] = useState("");
-  const { isNoneMobile, drawerWidth, isOpen, setIsOpen } = props;
-  const classes = useStyles();
-  const colorMode: any = useContext(ColorModeContext);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+const SidebarComponent: React.FC<ISidebarProps> = (
+  props: ISidebarProps
+): JSX.Element => {
+  const [active, setActive] = useState('')
+  const { isNoneMobile, drawerWidth, isOpen, setIsOpen } = props
+  const classes = useStyles()
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const theme = useTheme()
 
   useEffect(() => {
-    setActive(pathname.substring(1));
-  }, [pathname]);
+    setActive(pathname)
+  }, [pathname]) //UseEffect - всё что находится в нем, а конкретно в колбэк функции, выполняется если у нас в массиве зависимостей ничего не указано - при каждом рендере страницы
 
   const renderNavMenu = navMenu.map((element): JSX.Element => {
     return (
       <ListItem key={element.id}>
         <ListItemButton
-          className={classes.navItem}
+          className={
+            active === element.path
+              ? `${classes.navItem} ${classes.active}`
+              : classes.navItem
+          }
           onClick={() => navigate(`${element.path}`)}
         >
           <ListItemIcon>{element.icon}</ListItemIcon>
           <ListItemText>
-            <Typography variant={"body1"}>{element.name}</Typography>
+            <Typography variant={'body1'}>{element.name}</Typography>
           </ListItemText>
         </ListItemButton>
       </ListItem>
-    );
-  });
+    )
+  })
 
   return (
     <Box component="nav">
@@ -64,10 +63,10 @@ const SidebarComponent = (props: any) => {
           anchor="left"
           sx={{
             width: drawerWidth,
-            "& .MuiDrawer-paper": {
+            '& .MuiDrawer-paper': {
               color: theme.palette.secondary.main,
               backgroundColor: theme.palette.primary.main,
-              boxSizing: "border-box",
+              boxSizing: 'border-box',
               width: drawerWidth,
             },
           }}
@@ -107,7 +106,7 @@ const SidebarComponent = (props: any) => {
         </Drawer>
       )}
     </Box>
-  );
-};
+  )
+}
 
-export default SidebarComponent;
+export default SidebarComponent
