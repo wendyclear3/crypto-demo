@@ -5,17 +5,17 @@ export interface IPropsLogin<
   TContext = any
 > {
   navigate: (to: string) => void
-  register: UseFormRegister<TFieldValues>
+  register: UseFormRegister<any>
   errors: FieldErrors<TFieldValues>
 }
 
-export interface IPropsRegister {
-  setPassword: (value: string) => void
-  setEmail: (value: string) => void
-  setRepeatPassword: (value: string) => void
-  setFirstName: (value: string) => void
-  setUserName: (value: string) => void
+export interface IPropsRegister<
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any
+> {
   navigate: (to: string) => void
+  register: UseFormRegister<any>
+  errors: FieldErrors<TFieldValues>
 }
 
 export interface IAuthState {

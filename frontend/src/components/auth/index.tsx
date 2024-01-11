@@ -10,15 +10,9 @@ import { login } from '../../store/slice/auth'
 import { AppErrors } from '../../common/errors'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { LoginSchema } from '../utils/yup'
-import * as yup from 'yup'
+import { LoginSchema, RegisterSchema } from '../utils/yup'
 
 const AuthRootComponent: React.FC = (): JSX.Element => {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [repeatPassword, setRepeatPassword] = React.useState('')
-  const [firstName, setFirstName] = React.useState('')
-  const [userName, setUserName] = React.useState('')
   const location = useLocation()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -26,15 +20,14 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<yup.InferType<typeof LoginSchema>>({
-    resolver: yupResolver(LoginSchema),
-    defaultValues: {
-      email: email,
-      password: password,
-    },
+  } = useForm({
+    resolver: yupResolver(
+      location.pathname === '/login' ? LoginSchema : RegisterSchema
+    ),
   })
 
   const handleSubmitForm = async (data: any) => {
+    console.log(data)
     if (location.pathname === '/login') {
       try {
         const userData = {
@@ -48,13 +41,13 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
         return error
       }
     } else {
-      if (password === repeatPassword) {
+      if (data.password === data.confirmPassword) {
         try {
           const userData = {
-            email,
-            password,
-            userName,
-            firstName,
+            firstName: data.firstName,
+            userName: data.userName,
+            email: data.email,
+            password: data.password,
           }
           const newUser = await instance.post('auth/register', userData)
           await dispatch(login(newUser.data))
@@ -92,11 +85,8 @@ const AuthRootComponent: React.FC = (): JSX.Element => {
           ) : location.pathname === '/register' ? (
             <RegisterPage
               navigate={navigate}
-              setEmail={setEmail}
-              setPassword={setPassword}
-              setRepeatPassword={setRepeatPassword}
-              setFirstName={setFirstName}
-              setUserName={setUserName}
+              errors={errors}
+              register={register}
             />
           ) : null}
         </Box>
