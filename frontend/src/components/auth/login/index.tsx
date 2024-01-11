@@ -23,7 +23,7 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
         margin="normal"
         label="Email"
         variant="outlined"
-        placeholder="Введите ваш email"
+        placeholder="Enter your email"
         helperText={errors.email ? `${errors.email.message}` : ''}
         {...register('email')}
       />
