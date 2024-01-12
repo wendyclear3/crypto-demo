@@ -7,6 +7,7 @@ export interface IPropsLogin<
   navigate: (to: string) => void
   register: UseFormRegister<any>
   errors: FieldErrors<TFieldValues>
+  loading: boolean
 }
 
 export interface IPropsRegister<
@@ -16,11 +17,13 @@ export interface IPropsRegister<
   navigate: (to: string) => void
   register: UseFormRegister<any>
   errors: FieldErrors<TFieldValues>
+  loading: boolean
 }
 
 export interface IAuthState {
   user: iPublicUser
   isLogged: boolean
+  isLoading: boolean
 }
 
 export interface iPublicUser {
@@ -40,4 +43,16 @@ export interface IWatchList {
   createdAt: string
   updatedAt: string
   user: number | null
+}
+
+export interface ILoginData {
+  email: string
+  password: string
+}
+
+export interface IRegisterData {
+  email: string
+  password: string
+  firstName: string
+  userName: string
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 import { Box, TextField, Typography } from '@mui/material'
 import { IPropsLogin } from '../../../common/types/auth'
-import AppButton from '../../../components/app-button'
 import { useStyles } from './styles'
+import AppLoadingButton from '../../../components/loading-button'
 
 const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
-  const { navigate, register, errors } = props
+  const { navigate, register, errors, loading } = props
   const classes = useStyles()
   return (
     <>
@@ -43,9 +43,9 @@ const LoginPage: React.FC<IPropsLogin> = (props: IPropsLogin): JSX.Element => {
           {...register('password')}
         />
       </Box>
-      <AppButton type="submit" variant="contained">
+      <AppLoadingButton loading={loading} type="submit" variant="contained">
         Login
-      </AppButton>
+      </AppLoadingButton>
 
       <Box margin="20px 0">
         <Typography variant="body1">

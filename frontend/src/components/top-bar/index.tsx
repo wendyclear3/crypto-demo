@@ -39,7 +39,9 @@ const TopBarComponent: React.FC<ITopBarProps> = (
             className={classes.menuIcon}
             onClick={() => setIsOpen(!isOpen)}
           />
-          <Typography variant="h4">Welcome, Wendy</Typography>
+          <Typography variant="h4">
+            Welcome, {sessionStorage.getItem('name')}
+          </Typography>
         </FlexBetween>
         <Box display="flex">
           <Grid className={classes.iconBlock}>
