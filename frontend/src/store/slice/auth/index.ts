@@ -1,41 +1,63 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { IAuthState } from "../../../common/types/auth";
+import { createSlice } from '@reduxjs/toolkit'
+import { IAuthState } from '../../../common/types/auth'
+import { loginUser, registerUser } from '../../thunks/auth'
 
 const initialState: IAuthState = {
   //сущности
   user: {
     id: null,
-    firstName: "",
-    userName: "",
-    email: "",
-    createdAt: "",
-    updatedAt: "",
+    firstName: '',
+    userName: '',
+    email: '',
+    createdAt: '',
+    updatedAt: '',
     watchList: [
       {
         id: null,
-        name: "",
-        assetId: "",
-        createdAt: "",
-        updatedAt: "",
+        name: '',
+        assetId: '',
+        createdAt: '',
+        updatedAt: '',
         user: null,
       },
     ],
   },
   isLogged: false,
-};
+  isLoading: false,
+}
 
 export const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
-  reducers: {
-    //редюсеры регистер, логин, логаут
-    login(state, action) {
-      state.user = action.payload;
-      state.isLogged = true;
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(loginUser.pending, (state, action) => {
+      state.isLogged = false
+      state.isLoading = true
+    })
+    builder.addCase(loginUser.fulfilled, (state, action) => {
+      state.user = action.payload
+      state.isLogged = true
+      state.isLoading = false
+    })
+    builder.addCase(loginUser.rejected, (state, action) => {
+      state.isLogged = false
+      state.isLoading = false
+    })
+    builder.addCase(registerUser.pending, (state, action) => {
+      state.isLogged = false
+      state.isLoading = true
+    })
+    builder.addCase(registerUser.fulfilled, (state, action) => {
+      state.user = action.payload
+      state.isLogged = true
+      state.isLoading = false
+    })
+    builder.addCase(registerUser.rejected, (state, action) => {
+      state.isLogged = false
+      state.isLoading = false
+    })
   },
-}); //передаем объект с опциями
+}) //передаем объект с опциями
 
-export const { login } = authSlice.actions;
-
-export default authSlice.reducer;
+export default authSlice.reducer
