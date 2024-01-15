@@ -1,10 +1,8 @@
-import { useAppSelector } from '../utils/hook'
 import { useStyles } from './styles'
 import {
   AppBar,
   Box,
   Grid,
-  Icon,
   IconButton,
   InputBase,
   Toolbar,
@@ -18,7 +16,7 @@ import {
   NotificationsNone,
   MenuOutlined,
 } from '@mui/icons-material'
-import { ColorModeContext, tokens } from '../../theme'
+import { ColorModeContext } from '../../theme'
 import React, { useContext } from 'react'
 import FlexBetween from '../flex-between'
 import { ITopBarProps } from '../../common/types/top-bar'
