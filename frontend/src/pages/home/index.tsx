@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../utils/hook'
 import { getFavoriteAssets } from '../../store/thunks/assets'
 import { Box, Grid } from '@mui/material'
 import { useStyles } from './styles'
+import AreaChart from '../../components/charts/area-chart'
 
 const Home = () => {
   const classes = useStyles()
@@ -50,7 +51,7 @@ const Home = () => {
             </div>
           </Grid>
           <Grid item lg={6} sm={6} xs={12}>
-            <h5>Chart</h5>
+            <AreaChart />
           </Grid>
         </Grid>
       </Grid>
