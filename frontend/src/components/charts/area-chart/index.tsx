@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -12,6 +11,8 @@ import {
   ScriptableContext,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
+import moment from 'moment'
+import { IAreaChartProps } from '../../../common/types/assets'
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -22,51 +23,57 @@ ChartJS.register(
   Filler,
   Legend
 )
-const options = {
-  responsive: true,
-  scales: {
-    x: {
-      grid: {
+
+const AreaChart = (props: IAreaChartProps) => {
+  const { data } = props
+
+  const options = {
+    responsive: true,
+    scales: {
+      x: {
+        display: false,
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        display: false,
+        grid: {
+          display: false,
+        },
+      },
+    },
+    plugins: {
+      legend: {
         display: false,
       },
     },
-    y: {
-      display: false,
-      grid: {
-        display: false,
+  }
+
+  const values = {
+    labels: data.map(
+      (element: number[]): string => moment(element[0]).format('DD.MM.YY') //ось y - дата
+    ),
+    datasets: [
+      //ось x - данные с ценами
+      {
+        label: 'Price',
+        data: data.map((element: number[]): number => {
+          return element[1]
+        }),
+        borderColor: 'rgb(25, 0, 213)',
+        fill: 'start',
+        backGroundColor: (context: ScriptableContext<'line'>) => {
+          const ctx = context.chart.ctx
+          const gradient = ctx.createLinearGradient(0, 0, 0, 180)
+          gradient.addColorStop(0, '#C1EF00')
+          gradient.addColorStop(1, '#232323')
+          return gradient
+        },
       },
-    },
-  },
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-}
-
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
-
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Pidor',
-      data: labels.map(() => faker.datatype.number({})),
-      borderColor: 'rgb(25, 0, 213)',
-      fill: 'start',
-      backGroundColor: (context: ScriptableContext<'line'>) => {
-        const ctx = context.chart.ctx
-        const gradient = ctx.createLinearGradient(0, 0, 0, 180)
-        gradient.addColorStop(0, '#C1EF00')
-        gradient.addColorStop(1, '#232323')
-        return gradient
-      },
-    },
-  ],
-}
-
-const AreaChart = () => {
-  return <Line options={options} data={data} />
+    ],
+  }
+  return <Line options={options} data={values} width={300} height={100} />
 }
 
 export default AreaChart
