@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +9,6 @@ import {
   Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import { faker } from '@faker-js/faker'
 import { ILineChartProps } from '../../../common/types/assets'
 import moment from 'moment'
 
@@ -49,7 +47,7 @@ const LineChart = (props: ILineChartProps) => {
     ),
     datasets: [
       {
-        label: data[0].name.chartAt(0).toUpperCase() + data[0].name.slice(1),
+        label: data[0].name.charAt(0).toUpperCase() + data[0].name.slice(1),
         data: data[0].price_chart_data.map((element: any) => element[1]),
         borderColor: 'rgb(255, 99, 132)',
         backgroundColor: 'rgba(255, 99, 132, 0.5)',
