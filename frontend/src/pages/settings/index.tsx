@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react'
 
-const SettingsComponent = () => {
-  return <h1>Settings page</h1>;
-};
+const SettingsPage = () => {
+  return <h1>Settings page</h1>
+}
 
-export default SettingsComponent;
+export default SettingsPage

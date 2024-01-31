@@ -9,9 +9,8 @@ import TrendDown from '../../assets/images/chart/trend-down.svg'
 import LineChart from '../../components/charts/line-chart'
 import { IChartData, ISingleAsset } from '../../common/types/assets'
 import TopPriceComponent from '../../components/top-price'
-import assets from '../../store/slice/assets'
 
-const Home: FC = (): JSX.Element => {
+const HomePage: FC = (): JSX.Element => {
   const classes = useStyles()
   const favoriteAssets: IChartData[] = useAppSelector(
     //массив с данными из стора, который запрашивается с коингеко
@@ -113,4 +112,4 @@ const Home: FC = (): JSX.Element => {
   )
 }
 
-export default Home
+export default HomePage
