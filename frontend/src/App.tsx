@@ -1,14 +1,14 @@
-import React from 'react'
-import Home from './pages/home'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from '../src/utils/router/privateRoute'
-import AuthRootComponent from './pages/auth'
 import { ColorModeContext, useMode } from './theme'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import LayoutComponent from './components/layout'
-import WatchlistComponent from './pages/watchlist'
-import NewsComponent from './pages/news'
-import SettingsComponent from './pages/settings'
+import SingleAssetPage from './pages/singleAsset'
+import HomePage from './pages/home'
+import WatchlistPage from './pages/watchlist'
+import SettingsPage from './pages/settings'
+import NewsPage from './pages/news'
+import AuthRootPage from './pages/auth'
 
 function App() {
   const [theme, colorMode] = useMode()
@@ -20,13 +20,14 @@ function App() {
           <Routes>
             <Route element={<LayoutComponent />}>
               <Route element={<PrivateRoute />}>
-                <Route path="/" element={<Home />} />
-                <Route path="/watchlist" element={<WatchlistComponent />} />
-                <Route path="/news" element={<NewsComponent />} />
-                <Route path="/settings" element={<SettingsComponent />} />
+                <Route path="/" element={<HomePage />} />
+                <Route path="/watchlist" element={<WatchlistPage />} />
+                <Route path="/news" element={<NewsPage />} />
+                <Route path="/settings" element={<SettingsPage />} />
+                <Route path="/single/:id" element={<SingleAssetPage />} />
               </Route>
-              <Route path="login" element={<AuthRootComponent />} />
-              <Route path="register" element={<AuthRootComponent />} />
+              <Route path="login" element={<AuthRootPage />} />
+              <Route path="register" element={<AuthRootPage />} />
             </Route>
           </Routes>
         </div>
