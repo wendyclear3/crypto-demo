@@ -2,9 +2,9 @@ import { Stack, Autocomplete, TextField } from '@mui/material'
 import { ISingleAsset } from '../../common/types/assets'
 import { useAppSelector } from '../../utils/hook'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
-const SearchBarComponent = () => {
+const SearchBarComponent: FC = (): JSX.Element => {
   const [selectedItem, setSelectedItem] = useState<string | null>('') //дженерик
   const navigate = useNavigate()
   const assetsArray: ISingleAsset[] = useAppSelector(
@@ -15,7 +15,7 @@ const SearchBarComponent = () => {
       <Autocomplete
         value={selectedItem}
         onChange={(e: any, value: string | null) => {
-          navigate(`single/${value}`)
+          navigate(`single/${value}`) //динамический роутинг
           setSelectedItem(null)
         }} //отловил значение и сохранил в стейт
         renderInput={(element) => (
