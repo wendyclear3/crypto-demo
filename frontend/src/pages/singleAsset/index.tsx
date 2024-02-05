@@ -1,13 +1,23 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hook'
 import { ISingleAsset } from '../../common/types/assets'
-import { Avatar, Button, Grid, Typography } from '@mui/material'
+import {
+  Alert,
+  AlertColor,
+  Avatar,
+  Button,
+  Grid,
+  Snackbar,
+  Typography,
+} from '@mui/material'
 import FlexBetween from '../../components/flex-between'
 import { useStyles } from './styles'
 import { createWatchListRecord } from '../../store/thunks/assets'
 
 const SingleAssetPage: FC = (): JSX.Element => {
+  const [open, setOpen] = useState(false)
+  const [severity, setSeverity] = useState<AlertColor>('success')
   const navigate = useNavigate()
   const classes = useStyles()
   const { id } = useParams() //получаем данные из url //достаем сущность id
@@ -21,15 +31,28 @@ const SingleAssetPage: FC = (): JSX.Element => {
   )
 
   const handleCreateRecord = () => {
-    const data = {
-      name: '',
-      assetId: '',
+    try {
+      const data = {
+        name: '',
+        assetId: '',
+      }
+      if (asset) {
+        data.name = asset.name
+        data.assetId = asset.id
+      }
+      dispatch(createWatchListRecord(data))
+      setSeverity('success')
+      setOpen(true)
+      setTimeout(() => {
+        setOpen(false)
+      }, 2000)
+    } catch (error) {
+      setSeverity('error')
+      setOpen(true)
+      setTimeout(() => {
+        setOpen(false)
+      }, 2000)
     }
-    if (asset) {
-      data.name = asset.name
-      data.assetId = asset.id
-    }
-    dispatch(createWatchListRecord(data))
   }
 
   return (
@@ -115,6 +138,11 @@ const SingleAssetPage: FC = (): JSX.Element => {
               Add to Watchlist
             </Button>
           </Grid>
+          <Snackbar open={open} autoHideDuration={6000}>
+            <Alert severity={severity} sx={{ width: '100%' }}>
+              Success!
+            </Alert>
+          </Snackbar>
         </Grid>
       )}
     </>
