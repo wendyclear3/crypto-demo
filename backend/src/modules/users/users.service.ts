@@ -69,9 +69,9 @@ export class UserService {
     }
   }
 
-  async updateUser(email: string, dto: UpdateUserDTO): Promise<UpdateUserDTO> {
+  async updateUser(userId: number, dto: UpdateUserDTO): Promise<UpdateUserDTO> {
     try {
-      await this.userRepository.update(dto, { where: { email } });
+      await this.userRepository.update(dto, { where: { id: userId } });
       return dto;
     } catch (error) {
       throw new Error(error);
