@@ -6,13 +6,15 @@ import FlexBetween from '../flex-between'
 import { ITopBarProps } from '../../common/types/top-bar'
 import ThemeSwitcherComponent from '../theme-switcher'
 import SearchBarComponent from '../search-bar'
+import { useAppSelector } from '../../utils/hook'
 
 const TopBarComponent: React.FC<ITopBarProps> = (
   props: ITopBarProps
 ): JSX.Element => {
   const classes = useStyles()
   const { isOpen, setIsOpen, isNoneMobile } = props
-
+  const { user } = useAppSelector((state) => state.auth)
+  console.log(user)
   return (
     <AppBar className={classes.root} position="static">
       <Toolbar className={classes.toolbar}>
@@ -24,7 +26,8 @@ const TopBarComponent: React.FC<ITopBarProps> = (
                 onClick={() => setIsOpen(!isOpen)}
               />
               <Typography variant="h4">
-                Welcome, {sessionStorage.getItem('name')}
+                Welcome, &#8239;
+                {user && sessionStorage.getItem('name')}
               </Typography>
             </FlexBetween>
           </Grid>

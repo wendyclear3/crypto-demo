@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDTO } from '../users/dto';
 import { UserLoginDTO } from './dto';
@@ -24,7 +32,9 @@ export class AuthController {
   @ApiTags('API')
   @ApiResponse({ status: 200, type: AuthUserResponse })
   @Post('login')
-  login(@Body() dto: UserLoginDTO): Promise<AuthUserResponse> {
+  login(
+    @Body() dto: UserLoginDTO,
+  ): Promise<AuthUserResponse | BadRequestException> {
     return this.authService.loginUser(dto);
   }
 

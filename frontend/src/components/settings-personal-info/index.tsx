@@ -3,32 +3,35 @@ import { useAppDispatch, useAppSelector } from '../../utils/hook'
 import { Box, Grid, TextField } from '@mui/material'
 import { useStyles } from './styles'
 import AppLoadingButton from '../loading-button'
-import { updateUserInfo } from '../../store/thunks/auth'
+import { getPublicUser, updateUserInfo } from '../../store/thunks/auth'
 
 const SettingsPersonalInfoComponent = () => {
   const dispatch = useAppDispatch()
   const [name, setName] = useState('')
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
-  const { user } = useAppSelector((state: any) => state.auth.user)
+  const { user, isLogged } = useAppSelector((state: any) => state.auth.user)
+  // console.log('payload: ', user)
 
   useEffect(() => {
-    user && setName(user.firstName)
-    console.log(user)
-    setUserName(user.userName)
-    setEmail(user.email)
+    if (user) {
+      setName(user.firstName)
+      setUserName(user.userName)
+      setEmail(user.email)
+    }
   }, [user])
 
   const classes = useStyles()
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
     const data = {
       firstName: name,
       userName: userName,
       email: email,
     }
-    dispatch(updateUserInfo(data))
+    await dispatch(updateUserInfo(data))
+    await dispatch(getPublicUser())
   }
 
   return (

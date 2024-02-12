@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IAuthState } from '../../../common/types/auth'
-import { getPublicUser, loginUser, registerUser } from '../../thunks/auth'
+import {
+  getPublicUser,
+  loginUser,
+  registerUser,
+  updateUserInfo,
+} from '../../thunks/auth'
 
 const initialState: any = {
   //сущности
@@ -59,6 +64,7 @@ export const authSlice = createSlice({
     })
     builder.addCase(getPublicUser.fulfilled, (state, action) => {
       state.user = action.payload
+      console.log('Data from user: ', state.user)
     })
   },
 }) //передаем объект с опциями
