@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { ILoginData, IRegisterData } from '../../../common/types/auth'
-import { instance } from '../../../utils/axios'
+import { instance, instanceAuth } from '../../../utils/axios'
 
 export const loginUser = createAsyncThunk(
   'auth/login',
@@ -37,3 +37,36 @@ export const registerUser = createAsyncThunk(
     }
   }
 ) //два параметра - имя(префикс) thunk'a, и колбэк функция
+
+export const getPublicUser = createAsyncThunk(
+  'auth/get-public-user-info',
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = await instanceAuth.get('auth/get-public-user-info')
+      return user.data
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)
+
+export const updateUserInfo = createAsyncThunk(
+  'users/update',
+  async (data: any, { rejectWithValue }) => {
+    try {
+      const user = await instanceAuth.patch('users', data)
+      sessionStorage.setItem('name', user.data.firstName)
+      return user.data
+    } catch (error: any) {
+      if (error.response && error.response.data.message) {
+        return rejectWithValue(error.response.data.message)
+      } else {
+        return rejectWithValue(error.message)
+      }
+    }
+  }
+)

@@ -1,11 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './models/user.model';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDTO, UpdateUserDTO } from './dto';
+import { CreateUserDTO, UpdatePasswordDTO, UpdateUserDTO } from './dto';
 import { Watchlist } from '../watchlist/models/watchlist.model';
 import { TokenService } from '../token/token.service';
 import { AuthUserResponse } from '../auth/response';
+import { AppError } from 'src/common/constants/errors';
 
 @Injectable()
 export class UserService {
@@ -37,6 +38,20 @@ export class UserService {
     }
   }
 
+  async findUserById(id: number): Promise<User> {
+    try {
+      return this.userRepository.findOne({
+        where: { id },
+        include: {
+          model: Watchlist,
+          required: false,
+        },
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   async createUser(dto: CreateUserDTO): Promise<CreateUserDTO> {
     try {
       dto.password = await this.hashPassword(dto.password); //обратились к дататрансферобжект к полю "пароль" и сказали что он теперь равняется результату выполнения метода hashPassword и именно ею мы заменяем наш строковый пароль который нам пришел.
@@ -55,7 +70,7 @@ export class UserService {
   async publicUser(email: string): Promise<AuthUserResponse> {
     try {
       const user = await this.userRepository.findOne({
-        where: { email: email },
+        where: { email },
         attributes: { exclude: ['password'] },
         include: {
           model: Watchlist,
@@ -64,17 +79,36 @@ export class UserService {
       });
       const token = await this.tokenService.generateJwtToken(user);
       return { user, token };
-    } catch (error) {
-      throw new Error(error);
+    } catch (e) {
+      throw new Error(e);
     }
   }
 
-  async updateUser(email: string, dto: UpdateUserDTO): Promise<UpdateUserDTO> {
+  async updateUser(userId: number, dto: UpdateUserDTO): Promise<UpdateUserDTO> {
     try {
-      await this.userRepository.update(dto, { where: { email } });
+      await this.userRepository.update(dto, { where: { id: userId } });
+      console.log(dto);
+      console.log(userId);
       return dto;
-    } catch (error) {
-      throw new Error(error);
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async updatePassword(userId: number, dto: UpdatePasswordDTO): Promise<any> {
+    try {
+      const { password } = await this.findUserById(userId);
+      console.log(password);
+      const currentPassword = await bcrypt.compare(dto.oldPassword, password);
+      console.log(currentPassword);
+      if (!currentPassword) return new BadRequestException(AppError.WRONG_DATA);
+      const newPassword = await this.hashPassword(dto.newPassword);
+      const data = {
+        password: newPassword,
+      };
+      return this.userRepository.update(data, { where: { id: userId } });
+    } catch (e) {
+      throw new Error(e);
     }
   }
 
