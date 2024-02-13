@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../utils/hook'
 import { Box, Grid, TextField } from '@mui/material'
 import { useStyles } from './styles'
 import AppLoadingButton from '../loading-button'
 import { getPublicUser, updateUserInfo } from '../../store/thunks/auth'
 
-const SettingsPersonalInfoComponent = () => {
+const SettingsPersonalInfoComponent: FC = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const [name, setName] = useState('')
   const [userName, setUserName] = useState('')
   const [email, setEmail] = useState('')
-  const { user, isLogged } = useAppSelector((state: any) => state.auth.user)
+  const { user } = useAppSelector((state: any) => state.auth.user)
   // console.log('payload: ', user)
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const SettingsPersonalInfoComponent = () => {
 
   const classes = useStyles()
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault()
     const data = {
       firstName: name,

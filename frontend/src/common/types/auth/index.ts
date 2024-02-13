@@ -21,7 +21,7 @@ export interface IPropsRegister<
 }
 
 export interface IAuthState {
-  user: iPublicUser
+  user: any
   isLogged: boolean
   isLoading: boolean
 }

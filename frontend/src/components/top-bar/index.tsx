@@ -14,7 +14,6 @@ const TopBarComponent: React.FC<ITopBarProps> = (
   const classes = useStyles()
   const { isOpen, setIsOpen, isNoneMobile } = props
   const { user } = useAppSelector((state) => state.auth.user)
-  console.log(user)
   return (
     <AppBar className={classes.root} position="static">
       <Toolbar className={classes.toolbar}>
