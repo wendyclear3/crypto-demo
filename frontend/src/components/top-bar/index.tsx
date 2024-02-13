@@ -13,7 +13,7 @@ const TopBarComponent: React.FC<ITopBarProps> = (
 ): JSX.Element => {
   const classes = useStyles()
   const { isOpen, setIsOpen, isNoneMobile } = props
-  const { user } = useAppSelector((state) => state.auth)
+  const { user } = useAppSelector((state) => state.auth.user)
   console.log(user)
   return (
     <AppBar className={classes.root} position="static">
@@ -27,7 +27,7 @@ const TopBarComponent: React.FC<ITopBarProps> = (
               />
               <Typography variant="h4">
                 Welcome, &#8239;
-                {user && sessionStorage.getItem('name')}
+                {user ? `${user.firstName}` : ''}
               </Typography>
             </FlexBetween>
           </Grid>
