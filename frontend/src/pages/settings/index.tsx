@@ -1,5 +1,5 @@
 import { Box, Grid, Tab, Tabs, useTheme } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import TabPanel from '../../components/tab-panel'
 import { tabProps } from '../../utils/helpers'
 import { useStyles } from './styles'
@@ -10,7 +10,7 @@ import { getPublicUser } from '../../store/thunks/auth'
 import ChangePasswordComponent from '../../components/change-password'
 import DeleteUserComponent from '../../components/delete-user'
 
-const SettingsPage = () => {
+const SettingsPage: FC = (): JSX.Element => {
   const [value, setValue] = useState(0)
   const dispatch = useAppDispatch()
   const theme = useTheme()

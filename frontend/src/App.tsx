@@ -1,3 +1,4 @@
+import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import PrivateRoute from '../src/utils/router/privateRoute'
 import { ColorModeContext, useMode } from './theme'
