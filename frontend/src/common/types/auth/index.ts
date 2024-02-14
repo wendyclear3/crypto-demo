@@ -21,12 +21,15 @@ export interface IPropsRegister<
 }
 
 export interface IAuthState {
-  user: any
+  user: {
+    user: IPublicUser
+    token: string
+  }
   isLogged: boolean
   isLoading: boolean
 }
 
-export interface iPublicUser {
+export interface IPublicUser {
   id: number | null
   firstName: string
   userName: string

@@ -17,16 +17,14 @@ export class AuthService {
       await this.userService.createUser(dto);
       return this.userService.publicUser(dto.email);
     } catch (error) {
-      throw error;
+      throw new Error(error);
     }
   }
 
-  async loginUser(
-    dto: UserLoginDTO,
-  ): Promise<AuthUserResponse | BadRequestException> {
+  async loginUser(dto: UserLoginDTO): Promise<AuthUserResponse> {
     try {
       const existUser = await this.userService.findUserByEmail(dto.email);
-      if (!existUser) return new BadRequestException(AppError.USER_NOT_EXIST);
+      if (!existUser) throw new BadRequestException(AppError.USER_NOT_EXIST);
       const validatePassword = await bcrypt.compare(
         dto.password,
         existUser.password,

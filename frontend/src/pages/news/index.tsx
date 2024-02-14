@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../utils/hook'
 import { getNews } from '../../store/thunks/news'
 import { Box, Grid, Link, Typography } from '@mui/material'
@@ -8,8 +8,9 @@ const NewsPage: FC = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const { news } = useAppSelector((state) => state.news)
   const classes = useStyles()
+
   const renderNewsBlock = news.map((element: any) => (
-    <Grid container className={classes.newsBlock}>
+    <Grid container className={classes.newsBlock} key={element.id}>
       <Grid item xs={12} md={3}>
         <img src={element.imageurl} alt={element.category} />
       </Grid>
