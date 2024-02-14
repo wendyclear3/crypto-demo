@@ -84,8 +84,7 @@ export const updateUserPassword = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await instanceAuth.patch('users/change-password', data)
-      return response.data // Возвращаем только данные из ответа
+      return instanceAuth.patch('users/change-password', data)
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useStyles } from './styles'
 import {
   Box,
@@ -33,7 +33,13 @@ const SidebarComponent: React.FC<ISidebarProps> = (
 
   useEffect(() => {
     setActive(pathname)
-  }, [pathname]) //UseEffect - всё что находится в нем, а конкретно в колбэк функции, выполняется если у нас в массиве зависимостей ничего не указано - при каждом рендере страницы
+  }, [pathname]) //UseEffect - всё что находится в нем, а конкретно в колбэк функции, выполняется. если в массиве зависимостей ничего не указано - при каждом рендере страницы
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('name')
+    sessionStorage.removeItem('token')
+    navigate('/login')
+  }
 
   const renderNavMenu = navMenu.map((element): JSX.Element => {
     return (
@@ -108,7 +114,10 @@ const SidebarComponent: React.FC<ISidebarProps> = (
                 </ListItem>
               )}
               <ListItem>
-                <ListItemButton className={classes.navItem}>
+                <ListItemButton
+                  className={classes.navItem}
+                  onClick={handleLogout}
+                >
                   <ListItemIcon>
                     <LogoutOutlined />
                   </ListItemIcon>
